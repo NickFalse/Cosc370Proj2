@@ -48,3 +48,14 @@ class SudokuBoard:
             print("invalid location")
             return []
         return self.board[y]
+    
+    def getRegion(self,x:int,y:int)->List[List[int]]:#returns a region as a 2d array
+        x = x*5
+        y = y*5
+        re:List[List[int]] = list()
+        for row in range(5):
+            l=list()
+            for column in range(5):
+                l.append(self.board[y+row][x+column])
+            re.append(l)
+        return re
