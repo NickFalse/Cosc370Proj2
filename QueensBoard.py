@@ -21,6 +21,9 @@ class QueensBoard:
             re += rw[:-1]+"]\n"
         return re
 
+    def __getitem__(self,key):#make board subscriptable i.e. qb[2][1]
+        return self.board[key]
+        
     def getColumn(self,x:int)->List[int]:#returns the column at x
         if not (0<=x<self.size):
             print("invalid location")
