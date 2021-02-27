@@ -1,0 +1,9 @@
+##todo: bring over the helper functions for creating the board
+##todo: develop heuristics function: for a particular cell at (x,y), it can only view possible 'swap' locations with all cells in the square (x/5,y/5). 
+  ##x/5,y/5 will provide the coordinates of the square the particular cell is within, for values of x and y between 0 and 2, inclusive.
+  ##When viewing a particular cell (x,y), it needs to consider all cells (x,0) to (x,24) and (0,y) and (24,y). If any of the perceived cells contains the same value, add 1 to the heuristic value.
+  ##The heuristic value of each cell considered ranges from 0 to 4.
+  ##The value of the current cell should also be tracked to compare to the heuristic value; any value lower than it can be taken while any value higher shouldn't.
+  ##Idea: for a particular cell (x,y), we should consider the swap location's heuristic value for the cell's contents.
+  ##If swapping a cell containing 1 at (x,y) with a cell containing 2 at (x2,y2), we should consider the heuristics of the cells current contents 
+    ##and then the heuristics of the swapped cells. That is, the cell containing 1 at (x2,y2) and containing 2 at (x,y).
