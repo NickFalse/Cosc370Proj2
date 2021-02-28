@@ -3,6 +3,7 @@ import random
 class QueensBoard:
     def __init__(self,size:int,autoFill:bool=True):
         self.size:int = size#size of board
+        self.queens:Set[Tuple[int,int]]=set()
         self.board:List[List[int]] = list()#board, 1 = queen 0 = empty
         for i in range(self.size):
             l = list()
@@ -23,7 +24,7 @@ class QueensBoard:
 
     def __getitem__(self,key):#make board subscriptable i.e. qb[2][1]
         return self.board[key]
-        
+
     def getColumn(self,x:int)->List[int]:#returns the column at x
         if not (0<=x<self.size):
             print("invalid location")
@@ -66,6 +67,7 @@ class QueensBoard:
             return False
         if not self.board[y][x]==1:
             self.board[y][x]=1
+            self.queens.add((x,y))
             return True
         else:
             return False
