@@ -88,6 +88,7 @@ class SudokuBoard:
                     self.board[y+row][x+column]=ls[row][column]
                 else:
                     print("lock")
+
         
     
     def fillRegion(self,x:int,y:int):
@@ -107,3 +108,22 @@ class SudokuBoard:
                     rg[yy][xx]=remaining.pop()
         print(rg)    
         self.setRegion(x,y,rg)
+
+    def replaceSquare(self, x:int,y:int, value:int):
+        self.board[x][y] = value
+        return self.board
+
+    def countConflicts(self, value, column, row, region):
+        conflicts = 0
+
+        for x in column:
+            if x == value:
+                conflicts = conflicts + 1
+        for x in row:
+            if x == value:
+                conflicts = conflicts + 1
+        for x in region:
+            if x == value:
+                conflicts = conflicts + 1
+
+        return conflicts
