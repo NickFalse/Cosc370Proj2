@@ -115,15 +115,19 @@ class SudokuBoard:
 
     def countConflicts(self, value, column, row, region):
         conflicts = 0
+        reg = region
 
         for x in column:
             if x == value:
                 conflicts = conflicts + 1
+
         for x in row:
             if x == value:
                 conflicts = conflicts + 1
-        for x in region:
-            if x == value:
-                conflicts = conflicts + 1
+
+        for x in range(len(reg)):
+            for i in range(len(reg[x])):
+                if reg[x][i] == value:
+                    conflicts = conflicts + 1
 
         return conflicts

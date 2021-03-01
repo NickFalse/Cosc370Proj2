@@ -12,8 +12,8 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
     board = sb.board #2d array
     ls = sb.lockedSquares #locked squares
     
-    for x in range(0, 25): 
-        for y in range(0, 25): 
+    for x in range(len(board)): 
+        for y in range(len(board)): 
             if ls[x][y] == True: #if the square is locked, 
                 pass #do nothing
             else: #otherwise we are allowed to edit this square
@@ -27,12 +27,10 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
                 region = SudokuBoard.getRegion(sb, (int(y/5)), (int(x/5))) #needs to be swapped because this is processed col, row, in SudokuBoard (at least i think, either way it works)
 
                 # print("\n")
-                # print ("Current Column: ", column)
-                # print ("Current Row: ", row)
-                # print ("Current Region: ", region) #currently broken
+                print ("Current Column: ", column)
+                print ("Current Row: ", row)
+                print ("Current Region: ", region) #currently broken
                 # print ("y/5:", int(x/5), "    x/5:", int(y/5))
-
-
 
                 currentValue = board[x][y]
                 indexCount = 0
