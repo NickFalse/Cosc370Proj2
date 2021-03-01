@@ -18,8 +18,6 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
         for y in range(len(board)): 
             if ls[x][y] == True: #if the square is locked, 
                 pass #do nothing
-            if x == 10:
-                return 0 #FOR TESTING
             else: #otherwise we are allowed to edit this square
 
                 print ("current y: " , x, "current x: ", y) #needs to be swapped because board is processed col, row and I didn't realize til now
