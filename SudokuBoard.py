@@ -62,7 +62,7 @@ class SudokuBoard:
         for i in range(5):
             for j in range(5):
                 self.fillRegion(i,j)
-                
+
     def getRow(self,y:int)->List[int]:#returns row at y
         if not (0<=y<self.size):
             print("invalid location")
@@ -87,9 +87,7 @@ class SudokuBoard:
                 if not self.lockedSquares[y+row][x+column]:
                     self.board[y+row][x+column]=ls[row][column]
                 else:
-                    print("lock")
-
-        
+                    print("lock")        
     
     def fillRegion(self,x:int,y:int):
         l=list()
