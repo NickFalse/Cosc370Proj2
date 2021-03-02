@@ -108,5 +108,5 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
 # To test, un-comment one of these
 #climbHills("sudoku1.csv")
 #climbHills("sudoku2.csv")
-climbHills("sudoku3.csv")
+#climbHills("sudoku3.csv")
 #climbHills("sudoku4.csv")
