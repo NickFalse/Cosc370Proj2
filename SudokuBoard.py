@@ -57,10 +57,12 @@ class SudokuBoard:
         for row in self.board:
             out.append(row[x])
         return out
+
     def fillAll(self):
         for i in range(5):
             for j in range(5):
                 self.fillRegion(i,j)
+
     def getRow(self,y:int)->List[int]:#returns row at y
         if not (0<=y<self.size):
             print("invalid location")
@@ -85,8 +87,7 @@ class SudokuBoard:
                 if not self.lockedSquares[y+row][x+column]:
                     self.board[y+row][x+column]=ls[row][column]
                 else:
-                    print("lock")
-        
+                    print("lock")        
     
     def fillRegion(self,x:int,y:int):
         l=list()
@@ -105,3 +106,26 @@ class SudokuBoard:
                     rg[yy][xx]=remaining.pop()
         print(rg)    
         self.setRegion(x,y,rg)
+
+    def replaceSquare(self, x:int,y:int, value:int):
+        self.board[x][y] = value
+        return self.board
+
+    def countConflicts(self, value, column, row, region):
+        conflicts = 0
+        reg = region
+
+        for x in column:
+            if x == value:
+                conflicts = conflicts + 1
+
+        for x in row:
+            if x == value:
+                conflicts = conflicts + 1
+
+        for x in range(len(reg)):
+            for i in range(len(reg[x])):
+                if reg[x][i] == value:
+                    conflicts = conflicts + 1
+
+        return conflicts
