@@ -3,6 +3,7 @@
 #Date: 3/1/2021
 
 from SudokuBoard import *
+import time
 
 board = []
 globalMin = 1000
@@ -17,6 +18,8 @@ stopper = 0 #used to find out how many iterations since we last updated globalMi
 #Date: 2/31/2021
 #params: inputBoard - .csv file containing a 25x25 sudoku board
 def climbHills(inputBoard): #string sb to indicate which board is being played i.e. ("sudoku1.csv")
+    start = time.time()
+
     global board
     global conflictCollection
     global Iterations
@@ -28,7 +31,7 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
     board = sb.board #2d array
     ls = sb.lockedSquares #locked squares
     
-    while sum(conflictCollection) != 0 and stopper < 3 and Iterations < maxIterations * 100: #Just finished an iteration, and the globalMin is not 0, maxIterations*100 because there are indexes in the board
+    while sum(conflictCollection) != 0 and stopper < 3 and Iterations < maxIterations * 625: #Just finished an iteration, and the globalMin is not 0, maxIterations*100 because there are indexes in the board
 
         if sum(conflictCollection) < globalMin:  #checks local min against global min
             globalMin = sum(conflictCollection)  #if local min is smaller, then we change globalMin to this
@@ -84,26 +87,31 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
 
                     Iterations = Iterations + 1 #to keep track of the # of iterations
 
-
+    end = time.time()
     #If there are 0 conflicts, we have solved the puzzle
     if sum(conflictCollection) == 0:
-        print("Game completed optimally in ", (Iterations/100) , " iterations\n")
+        #print("Game completed optimally in ", round(((Iterations/625) - 3),2) , " iterations\n")
+        print("Sudoku solved! There are 0 conflicts!")
+        print("Time taken:", round((end - start),2),"\n")
         print("Complete Board:\n")
         print (sb)
 
     elif stopper >= 3: #if it has been 3 full board iterations and we havent reset the global min, we are at the global min
-        print("Game ended due to reaching global min in", (Iterations/100) , "iterations\n")
-        print("Global minimum # of conflicts: ", globalMin, "\n")
+        #print("Game ended due to reaching global min in", round(((Iterations/625) - 3),2), "iterations\n")
+        print("Game ending unsolved due to reaching global min conflicts\n")
+        print("Time taken:", round((end - start),2),"\n")
+        print("Global minimum # of conflicts:", globalMin, "\n")
         print("Global minimum board:\n")
         print (bestBoard)
 
     #If we are over the number
-    elif Iterations >= maxIterations * 100: #*100 because there are indexes in the board
+    elif Iterations >= maxIterations * 625: #*100 because there are indexes in the board
         print("Game ended due to max iteration limit of", maxIterations, "\n")
-        print("Global minimum # of conflicts: ", globalMin, "\n")
+        print("Global minimum # of conflicts:", globalMin, "\n")
+        print("Time taken:", round((end - start),2), "seconds\n")
         print("Global minimum board:\n")
         print (bestBoard)
-    
+
 
 # To test, un-comment one of these
 #climbHills("sudoku1.csv")
