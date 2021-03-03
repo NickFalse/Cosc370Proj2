@@ -97,7 +97,7 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
         print (sb)
 
     elif stopper >= 3: #if it has been 3 full board iterations and we havent reset the global min, we are at the global min
-        #print("Game ended due to reaching global min in", round(((Iterations/625) - 3),2), "iterations\n")
+        #print("Game ended due to reaching global min in", round((Iterations/625),2), "iterations\n")
         print("Game ending unsolved due to reaching global min conflicts\n")
         print("Time taken:", round((end - start),2),"\n")
         print("Global minimum # of conflicts:", globalMin, "\n")
@@ -114,7 +114,7 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
 
 
 # To test, un-comment one of these
-#climbHills("sudoku1.csv")
+climbHills("sudoku1.csv")
 #climbHills("sudoku2.csv")
 #climbHills("sudoku3.csv")
 #climbHills("sudoku4.csv")
