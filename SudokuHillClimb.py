@@ -12,12 +12,14 @@ conflictCollection = [1001] #a list of all of the conflict values, if the sum = 
 maxIterations = 100 #the number of times we iterate over the entire board
 Iterations = 0 #current number of iterations
 stopper = 0 #used to find out how many iterations since we last updated globalMin
+verbose = False
 
 #climbHills(inputBoard) takes in an appropriately formatted .csv which represens a sudoku board, and attempts to solve it via hill climbing
 #Author: Mason Humphrey
 #Date: 2/31/2021
 #params: inputBoard - .csv file containing a 25x25 sudoku board
-def climbHills(inputBoard): #string sb to indicate which board is being played i.e. ("sudoku1.csv")
+def climbHills(inputBoard, isVerbose): #string sb to indicate which board is being played i.e. ("sudoku1.csv")
+    verbose = isVerbose
     start = time.time()
 
     global board
@@ -48,17 +50,19 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
                     pass                 #do nothing
                 else:                    #otherwise we are allowed to edit this square
 
-                    print ("current y: " , x, "current x: ", y) #needs to be swapped because board is processed col, row and I didn't realize til now
-                    print ("Current Value:", board[x][y], "\n")
-                    print (sb)
+                    if verbose == True:
+                        print ("current y: " , x, "current x: ", y) #needs to be swapped because board is processed col, row and I didn't realize til now
+                        print ("Current Value:", board[x][y], "\n")
+                        print (sb)
 
                     column = SudokuBoard.getColumn(sb, y)
                     row = SudokuBoard.getRow(sb,x)
                     region = SudokuBoard.getRegion(sb, (int(y/5)), (int(x/5))) #needs to be swapped because this is processed col, row, in SudokuBoard
 
-                    print ("Current Column: ", column)
-                    print ("Current Row: ", row)
-                    print ("Current Region:", region, "\n") 
+                    if verbose == True:
+                        print ("Current Column: ", column)
+                        print ("Current Row: ", row)
+                        print ("Current Region:", region, "\n") 
 
                     currentValue = board[x][y]
                     indexCount = 0
@@ -74,16 +78,21 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
 
                     for j in conflictList: #simply used for printing visual / understanding what is going on
                         indexCount = indexCount + 1
-                        print("Trying: ", indexCount,  "    conflicts:", j)
+                        if verbose == True:
+                            print("Trying: ", indexCount,  "    conflicts:", j)
                     
                     minConflicts = min(conflictList)
                     bestVal = conflictList.index(min(conflictList)) + 1 #+1 because index starts at 0, and we start at 1
-                    print ("\nmin # of conflicts:", minConflicts, ) #minconflicts is # of conflicts in best possible move
+                    if verbose == True:
+                        print ("\nmin # of conflicts:", minConflicts, ) #minconflicts is # of conflicts in best possible move
                     conflictCollection.append(minConflicts) 
 
-                    print ("best value:", bestVal, "\n")
+                    if verbose == True:
+                        print ("best value:", bestVal, "\n")
                     board = SudokuBoard.replaceSquare(sb, x, y, bestVal)
-                    print("\n --------------------------------------------------------------------------\n\n")
+
+                    if verbose == True:
+                        print("\n --------------------------------------------------------------------------\n\n")
 
                     Iterations = Iterations + 1 #to keep track of the # of iterations
 
@@ -91,14 +100,14 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
     #If there are 0 conflicts, we have solved the puzzle
     if sum(conflictCollection) == 0:
         #print("Game completed optimally in ", round(((Iterations/625) - 3),2) , " iterations\n")
-        print("Sudoku solved! There are 0 conflicts!")
+        print("Sudoku solved! There are 0 conflicts! This is optimal!")
         print("Time taken:", round((end - start),2),"\n")
         print("Complete Board:\n")
         print (sb)
 
     elif stopper >= 3: #if it has been 3 full board iterations and we havent reset the global min, we are at the global min
         #print("Game ended due to reaching global min in", round((Iterations/625),2), "iterations\n")
-        print("Game ending unsolved due to reaching global min conflicts\n")
+        print("Game ending unsolved due to reaching global min conflicts, this is not optimal\n")
         print("Time taken:", round((end - start),2),"\n")
         print("Global minimum # of conflicts:", globalMin, "\n")
         print("Global minimum board:\n")
@@ -106,7 +115,7 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
 
     #If we are over the number
     elif Iterations >= maxIterations * 625: #*100 because there are indexes in the board
-        print("Game ended due to max iteration limit of", maxIterations, "\n")
+        print("Game ended due to max iteration limit of", maxIterations, ". This is not optimal\n")
         print("Global minimum # of conflicts:", globalMin, "\n")
         print("Time taken:", round((end - start),2), "seconds\n")
         print("Global minimum board:\n")
@@ -114,7 +123,7 @@ def climbHills(inputBoard): #string sb to indicate which board is being played i
 
 
 # To test, un-comment one of these
-climbHills("sudoku1.csv")
-#climbHills("sudoku2.csv")
-#climbHills("sudoku3.csv")
-#climbHills("sudoku4.csv")
+#climbHills("sudoku1.csv",True)
+#climbHills("sudoku2.csv", True)
+#climbHills("sudoku3.csv", True)
+#climbHills("sudoku4.csv", True)
